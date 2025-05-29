@@ -109,7 +109,12 @@ class Entry_validate:
         """
         self._validate(self.e.get())
         if self.valid_bool:
-            return self.e.get()
+            if self.dtype=="int":
+                return int(self.e.get())
+            elif self.dtype=="float":
+                return float(self.e.get())
+            else:
+                return self.e.get()
         else:
             return None
     def grid(self, **kwargs):
