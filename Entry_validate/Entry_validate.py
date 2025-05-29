@@ -46,6 +46,10 @@ class Entry_validate:
         Parameters:
             P(str): value to validate
         """
+        if len(P)==0:
+            self.result_string.set("empty")
+            return False
+        
         if self.dtype not in self.supported_dtypes:
             print("unsuported data type")
             self.valid_bool=False
