@@ -48,6 +48,7 @@ class Entry_validate:
         """
         if len(P)==0:
             self.result_string.set("empty")
+            self.valid_bool=False
             return False
         
         if self.dtype not in self.supported_dtypes:
@@ -106,6 +107,7 @@ class Entry_validate:
         """
         Get the value from Entry if the value is valid
         """
+        self._validate(self.e.get())
         if self.valid_bool:
             return self.e.get()
         else:
@@ -137,14 +139,34 @@ class Entry_validate:
             return False
         
 
+
+
 if __name__ == "__main__":
-    from tkinter import Tk
+    
+    entrylist=[]
+
+    def readentry():
+        for etn in entrylist:
+            print(f"e1:{etn.get()}")
+                  
+     
+
+
+
+    from tkinter import Tk, Button
     root=Tk()
     root.geometry("300x400")
-    
-    Entry_validate(root, "str", 5, "G").pack()
-    Entry_validate(root, "str", 5, "L").pack()
-    Entry_validate(root, "str", 5, "E").pack()
-    Entry_validate(root, "int", None, None).pack()
+    #
+    #Entry_validate(root, "str", 5, "G").pack()
+    #Entry_validate(root, "str", 5, "L").pack()
+    #Entry_validate(root, "str", 5, "E").pack()
+    #Entry_validate(root, "int", None, None).pack()
+    e1=Entry_validate(root, "int")
+    e2=Entry_validate(root, "int")
+    entrylist=[e1,e2]
+    e1.pack()
+    e2.pack()
+    Button(root, text="read entries", command=readentry).pack()
+
 
     root.mainloop()
