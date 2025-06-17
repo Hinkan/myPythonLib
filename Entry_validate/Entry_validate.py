@@ -1,5 +1,7 @@
 from tkinter import Entry, Frame, Label
-from tkinter import BooleanVar, StringVar, IntVar
+from tkinter import BooleanVar, StringVar
+
+#TODO add a list of prohibited values, ability to update it
 class Entry_validate:
     """
     Entry which validates the characters entered
@@ -9,7 +11,7 @@ class Entry_validate:
         length(int): the length to validate
         orientation(str): h or v
     """
-    def __init__(self, parent, dtype, length=None, lengthcompare=None, orientation="h"):
+    def __init__(self, parent, dtype, length=None, lengthcompare=None, list_prohibited=[], orientation="h"):
         '''
         Initialize entry with validation
         Parameters:
@@ -105,7 +107,7 @@ class Entry_validate:
     
     def get(self):
         """
-        Get the value from Entry if the value is valid
+        Get the value from Entry if the value is valid, othevise returns None
         """
         self._validate(self.e.get())
         if self.valid_bool:
@@ -117,13 +119,20 @@ class Entry_validate:
                 return self.e.get()
         else:
             return None
-    def grid(self, **kwargs):
-        self.frame.grid(kwargs)
-
-    def pack(self, **kwargs):
-        self.frame.pack(kwargs)
+    def set_error(self, error_string):
+        """
+        a wrapper to manually set the error code
+        """
+        self.result_string.set(error_string)
     
     def _comparelength(self, P, comparetype, comparelength):
+        '''
+            Compare the length of P with comparelength using comparetype
+            Parameters:
+            P: string, int, float
+            comparetype(literal): G:greather than, L:lesser than, E: equal, None 
+            comparelength(int): the length to validate
+        '''
         if comparetype =="E":
             if len(P)==comparelength:
                 return True
@@ -143,8 +152,17 @@ class Entry_validate:
             print("unknown comparetype in Entry validate")
             return False
         
+    def grid(self, **kwargs):
+        self.frame.grid(kwargs)
 
+    def pack(self, **kwargs):
+        self.frame.pack(kwargs)
 
+    def config(self, **kvargs):#TODO should b
+        try:
+            self.e.config(**kvargs)
+        except:
+            print("faield")
 
 if __name__ == "__main__":
     
@@ -169,6 +187,7 @@ if __name__ == "__main__":
     e1=Entry_validate(root, "int")
     e2=Entry_validate(root, "int")
     entrylist=[e1,e2]
+    e1.config(state="disabled")
     e1.pack()
     e2.pack()
     Button(root, text="read entries", command=readentry).pack()
