@@ -87,6 +87,8 @@ class Entry_validate:
                 return False
             else:
                 P_typecast=float(P)
+        if self.dtype=="str":
+            P_typecast=str(P)
         if self.comparison !=None:
             if self.comparison=="E":
                 if self._comparelength(P, "L", self.length):
@@ -203,7 +205,7 @@ if __name__ == "__main__":
     
     Entry_validate(root, "float",list_prohibited=[1.0,2.0,3.5]).pack()
     
-    Entry_validate(root, "float",3, "G").pack()
+    Entry_validate(root, "str",3, "E", list_prohibited=["goo", "foo"]).pack()
     #e1=Entry_validate(root, "int")
     #e2=Entry_validate(root, "int", list_prohibited=[1,2,3])
     #entrylist=[e1,e2]
