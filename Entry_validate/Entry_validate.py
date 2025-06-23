@@ -132,6 +132,8 @@ class Entry_validate:
                 return self.e.get()
         else:
             return None
+    def get_ignore_validation(self):
+        return self.e.get()
     def set_error(self, error_string):
         """
         a wrapper to manually set the error code
