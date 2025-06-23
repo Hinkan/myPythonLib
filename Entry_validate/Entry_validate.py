@@ -1,7 +1,6 @@
 from tkinter import Entry, Frame, Label
 from tkinter import BooleanVar, StringVar
 
-#TODO add a list of prohibited values, ability to update it
 class Entry_validate:
     """
     Entry which validates the characters entered
@@ -9,6 +8,8 @@ class Entry_validate:
         parent(frame): tkinter parent Frame
         dtype(str): what datatype to validate
         length(int): the length to validate
+        comparison(literl):what comparison should be done with the length
+        list_prohibited(list): a list of values that is prhibited, returns false
         orientation(str): h or v
     """
     def __init__(self, parent, dtype, length=None, lengthcompare=None, list_prohibited=[], orientation="h"):
@@ -27,6 +28,7 @@ class Entry_validate:
         self.dtype=dtype
         self.length=length
         self.lengtcompare=lengthcompare
+        self.list_prohibited=list_prohibited
 
         self.result_string=StringVar()
         self.frame=Frame(parent)
@@ -48,6 +50,7 @@ class Entry_validate:
         Parameters:
             P(str): value to validate
         """
+        P_typecast=None
         if len(P)==0:
             self.result_string.set("empty")
             self.valid_bool=False
@@ -68,6 +71,8 @@ class Entry_validate:
                 self.result_string.set("Wrong data type")
                 self.valid_bool=False
                 return False
+            else:
+                P_typecast=int(P)
         
         if self.dtype=="float" :
             type_ok=True
@@ -80,6 +85,8 @@ class Entry_validate:
                 self.result_string.set("Wrong data type")
                 self.valid_bool=False
                 return False
+            else:
+                P_typecast=float(P)
         if self.lengtcompare !=None:
             if self.lengtcompare=="E":
                 if self._comparelength(P, "L", self.length):
@@ -100,7 +107,11 @@ class Entry_validate:
                     self.result_string.set("To Long")
                     self.valid_bool=False
                     return False
-                    
+
+        if P_typecast in self.list_prohibited:
+            self.result_string.set("Value prohibited")
+            self.valid_bool=False
+            return False       
         self.result_string.set("")
         self.valid_bool=True
         return True
@@ -180,16 +191,24 @@ if __name__ == "__main__":
     root=Tk()
     root.geometry("300x400")
     #
-    #Entry_validate(root, "str", 5, "G").pack()
-    #Entry_validate(root, "str", 5, "L").pack()
-    #Entry_validate(root, "str", 5, "E").pack()
-    #Entry_validate(root, "int", None, None).pack()
-    e1=Entry_validate(root, "int")
-    e2=Entry_validate(root, "int")
-    entrylist=[e1,e2]
-    e1.config(state="disabled")
-    e1.pack()
-    e2.pack()
+    Entry_validate(root, "str", 5, "G").pack()
+    Entry_validate(root, "str", 5, "L").pack()
+    Entry_validate(root, "str", 5, "E").pack()
+    Entry_validate(root, "int", None, None).pack()
+    
+    Entry_validate(root, "float", None, None).pack()
+    Entry_validate(root, "int", None, None).pack()
+    
+    Entry_validate(root, "int",list_prohibited=[1,2,3]).pack()
+    
+    Entry_validate(root, "float",list_prohibited=[1.0,2.0,3.5]).pack()
+    
+    Entry_validate(root, "float",3, "G").pack()
+    #e1=Entry_validate(root, "int")
+    #e2=Entry_validate(root, "int", list_prohibited=[1,2,3])
+    #entrylist=[e1,e2]
+    #e1.pack()
+    #e2.pack()
     Button(root, text="read entries", command=readentry).pack()
 
 
