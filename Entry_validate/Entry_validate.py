@@ -9,17 +9,17 @@ class Entry_validate:
         dtype(str): what datatype to validate
         length(int): the length to validate
         comparison(literl):what comparison should be done with the length
-        list_prohibited(list): a list of values that is prhibited, returns false
+        list_prohibited(list): a list of values that is prhibited, returns falsee
         orientation(str): h or v
     """
-    def __init__(self, parent, dtype, length=None, lengthcompare=None, list_prohibited=[], orientation="h"):
+    def __init__(self, parent, dtype, length=None, comparison=None, list_prohibited=[], orientation="h"):
         '''
         Initialize entry with validation
         Parameters:
             parent(frame): tkinter parent Frame
             dtype(str): what datatype to validate
             length(int): the length to validate
-            lengthcompare(literal):G:greather than, L:lesser than, E: equal, None 
+            comaprison(literal):G:greather than, L:lesser than, E: equal, None 
             orientation(str): h or v
         '''
         self.supported_dtypes=["int", "float", "str"]
@@ -27,7 +27,7 @@ class Entry_validate:
         self.valid_bool=BooleanVar
         self.dtype=dtype
         self.length=length
-        self.lengtcompare=lengthcompare
+        self.comparison=comparison
         self.list_prohibited=list_prohibited
 
         self.result_string=StringVar()
@@ -87,8 +87,8 @@ class Entry_validate:
                 return False
             else:
                 P_typecast=float(P)
-        if self.lengtcompare !=None:
-            if self.lengtcompare=="E":
+        if self.comparison !=None:
+            if self.comparison=="E":
                 if self._comparelength(P, "L", self.length):
                     self.result_string.set("To short")
                     self.valid_bool=False
@@ -97,12 +97,12 @@ class Entry_validate:
                     self.result_string.set("To long")
                     self.valid_bool=False
                     return False
-            if self.lengtcompare=="G":
+            if self.comparison=="G":
                 if not self._comparelength(P, "G", self.length):
                     self.result_string.set("To short")
                     self.valid_bool=False
                     return False
-            if self.lengtcompare=="L":
+            if self.comparison=="L":
                 if not self._comparelength(P, "L", self.length):
                     self.result_string.set("To Long")
                     self.valid_bool=False
