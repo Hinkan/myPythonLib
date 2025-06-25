@@ -1,0 +1,12 @@
+use poetry
+
+pip install poetry
+
+poetry init 
+make sure all teh required files are present
+
+poetry build : makes a binary that can be installed with pip from the project you want to use it in
+    -f sdist to only make the sdist not the wheel
+    
+
+pip install <<complete filepath>>
