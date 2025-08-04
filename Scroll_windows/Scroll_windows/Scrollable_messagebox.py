@@ -1,5 +1,5 @@
-from tkinter import Toplevel, Label, Button
-from Scrollframe import ScrollFrame
+from tkinter import Toplevel, Label, Button, Frame
+from Scroll_windows.Scrollframe import ScrollFrame
 class Scrollable_messagebox():
     """
     Messagebox with scrollable part for
