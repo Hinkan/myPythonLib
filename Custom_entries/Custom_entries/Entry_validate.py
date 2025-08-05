@@ -1,5 +1,4 @@
-from tkinter import Entry, Frame, Label
-from tkinter import BooleanVar, StringVar
+from tkinter import Entry, Frame, Label, StringVar
 
 class Entry_validate:
     """
@@ -26,7 +25,7 @@ class Entry_validate:
         '''
         self.supported_dtypes=["int", "float", "str"]
         self.parent=parent
-        self.valid_bool=BooleanVar
+        self.valid_bool=True
         self.dtype=dtype
         self.length=length
         self.comparison=comparison
