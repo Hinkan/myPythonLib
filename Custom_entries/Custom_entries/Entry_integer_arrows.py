@@ -4,7 +4,7 @@ class Entry_integer_arrows:
     Entry with buttons that increase/decreases the value, only works with integers
     Attributes:
         parentframe(Frame):parent frame
-        textvariable:works with both intvar and stringvar
+        textvariable:only works with intvar
         delta: stepsize for each button click, default 1
     """
     def __init__(self, parentframe, textvariable, delta=1):
