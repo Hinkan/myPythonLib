@@ -9,10 +9,10 @@ class Entry_validate:
         dtype(str): what datatype to validate
         length(int): the length to validate
         comparison(literl):what comparison should be done with the length
-        list_prohibited(list): a list of values that is prhibited, returns falsee
+        list_prohibited(list): a list of values that is prohibited, returns false
         orientation(str): h or v
     """
-    def __init__(self, parent, dtype, length=None, comparison=None, list_prohibited=[], orientation="h"):
+    def __init__(self, parent, dtype, length=None, comparison=None, list_prohibited=[], orientation="h", error_color="red"):
         '''
         Initialize entry with validation
         Parameters:
@@ -20,7 +20,9 @@ class Entry_validate:
             dtype(str): what datatype to validate
             length(int): the length to validate
             comaprison(literal):G:greather than, L:lesser than, E: equal, None 
+            list_prohibited(list): a list of values that is prohibited, returns false
             orientation(str): h or v
+            error_color(str): uses tkinter foreground colors
         '''
         self.supported_dtypes=["int", "float", "str"]
         self.parent=parent
@@ -35,7 +37,7 @@ class Entry_validate:
         validation=(self.frame.register(self._validate))
         
         self.e=Entry(self.frame, validate="focusout", validatecommand=(validation, '%P'))
-        self.l_val=Label(self.frame, textvariable=self.result_string, fg="red", width=15, anchor="w")
+        self.l_val=Label(self.frame, textvariable=self.result_string, fg=error_color, width=15, anchor="w")
         if orientation=="h":
             self.e.grid(row=0, column=0)
             self.l_val.grid(row=0, column=1)
@@ -177,43 +179,23 @@ class Entry_validate:
         try:
             self.e.config(**kvargs)
         except:
-            print("faield")
+            print("failed")
 
 if __name__ == "__main__":
-    
-    entrylist=[]
-
-    def readentry():
-        for etn in entrylist:
-            print(f"e1:{etn.get()}")
-                  
-     
-
-
 
     from tkinter import Tk, Button
     root=Tk()
     root.geometry("300x400")
-    #
+    
     Entry_validate(root, "str", 5, "G").pack()
     Entry_validate(root, "str", 5, "L").pack()
     Entry_validate(root, "str", 5, "E").pack()
     Entry_validate(root, "int", None, None).pack()
-    
     Entry_validate(root, "float", None, None).pack()
     Entry_validate(root, "int", None, None).pack()
-    
     Entry_validate(root, "int",list_prohibited=[1,2,3]).pack()
-    
     Entry_validate(root, "float",list_prohibited=[1.0,2.0,3.5]).pack()
-    
     Entry_validate(root, "str",3, "E", list_prohibited=["goo", "foo"]).pack()
-    #e1=Entry_validate(root, "int")
-    #e2=Entry_validate(root, "int", list_prohibited=[1,2,3])
-    #entrylist=[e1,e2]
-    #e1.pack()
-    #e2.pack()
-    Button(root, text="read entries", command=readentry).pack()
 
 
     root.mainloop()
