@@ -1,1 +1,0 @@
-from Entry_integer_arrows import Entry_integer_arrows

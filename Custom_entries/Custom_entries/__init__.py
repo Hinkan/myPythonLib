@@ -1,0 +1,2 @@
+from Custom_entries.Entry_validate import Entry_validate
+from Custom_entries.Entry_integer_arrows import Entry_integer_arrows

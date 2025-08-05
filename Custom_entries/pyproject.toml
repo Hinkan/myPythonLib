@@ -1,14 +1,13 @@
 [project]
-name = "entry-validate"
-version = "0.1.3"
-description = "validate dtype and length in an entry"
+name = "custom-entries"
+version = "0.1.0"
+description = ""
 authors = [
-    {name = "Your Name",email = "you@example.com"}
+    {name = "Hinkan",email = "henrik.pet93@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-
 ]
 
 
