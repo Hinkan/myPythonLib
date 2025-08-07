@@ -28,6 +28,8 @@ class ScrollFrame():
         Label(self.container, text=label_text).grid(row=0, column=0)
     def set_dimension(self, dim:tuple):
         self.scrollcanvas.config(width=dim[0],height=dim[1])
+        self.scrollcanvas.create_window(0,0,anchor="nw", width=dim[0], window=self.scrollframe, tags="expand")
+
 
     def enable_border(self):
         self.container.configure(borderwidth=1, relief="groove")
