@@ -2,6 +2,8 @@ from tkinter import Frame, StringVar, Label, Button
 from tkinter.ttk import Combobox
 from Scroll_windows import ScrollFrame
 
+#TODO possibility to resize
+
 class combobox_add_to_frame:
     """
     Combobox that adds the selected items to a list below the combobox
