@@ -2,7 +2,7 @@ from tkinter import Tk, Canvas, Frame, font
 
 class Dragsorter():
     #TODO make everything resizeble
-    def __init__(self, window, drag_list,callback=None, width=600, height=400, x_cord=15, y_cord=15):
+    def __init__(self, window, drag_list,callback=None, width=600, height=400, canvascolor="white", itemcolor='#E4E4E4', x_cord=15, y_cord=15):
         """
             A canvas with a row of entries which can be dragged and sorted
             Parameters:
@@ -19,7 +19,9 @@ class Dragsorter():
         self.callback=callback
         self.width=width
         self.height=height
-        self.canvas=Canvas(self.frame, width=self.width, height=self.height)
+        self.canvascolor=canvascolor
+        self.itemcolor=itemcolor
+        self.canvas=Canvas(self.frame, width=self.width, height=self.height, bg=self.canvascolor, highlightbackground="black")
         self.canvas.grid(row=0, column=0)
         self.list_items=[]
         self.global_y=y_cord
@@ -54,7 +56,7 @@ class Dragsorter():
         '''
         
         name_width=self.font.measure(name)+x_padding#with of the name+padding
-        citem=_canvasitem(self.canvas,name, width=name_width )
+        citem=_canvasitem(self.canvas,name, width=name_width, color=self.itemcolor)
         self.list_items.append(citem)
         
     def get(self):
@@ -98,7 +100,7 @@ class Dragsorter():
         self.frame.pack(kwargs)
 
 class _canvasitem():
-    def __init__(self,canvas, name, x0=10, y0=10, width=50, height=15 ,color=None)->None:
+    def __init__(self,canvas, name, x0=10, y0=10, width=50, height=15 ,color='#E4E4E4')->None:
         self.name=name 
         self.x0=x0
         self.y0=y0
@@ -117,7 +119,7 @@ class _canvasitem():
         y0=self.y0
         x1=x0+self.width
         y1=y0+self.height
-        self.rect=self.canvas.create_rectangle(x0, y0, x1, y1, tags=self.name)
+        self.rect=self.canvas.create_rectangle(x0, y0, x1, y1, tags=self.name, fill=color)
         self.text=self.canvas.create_text(x0+self.textoffset,y0, text=self.name)
         
     def move(self, x, y):
