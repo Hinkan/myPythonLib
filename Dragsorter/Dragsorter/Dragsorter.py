@@ -57,7 +57,9 @@ class Dragsorter():
         citem=_canvasitem(self.canvas,name, width=name_width )
         self.list_items.append(citem)
         
-
+    def get(self):
+        return [item.name for item in self.list_items]
+    
     def _select_on_press(self, event):
         for item in self.list_items:
             if item.in_area(event.x, event.y):
