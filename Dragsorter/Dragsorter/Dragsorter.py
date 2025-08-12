@@ -2,12 +2,13 @@ from tkinter import Tk, Canvas, Frame, font
 
 class Dragsorter():
     #TODO make everything resizeble
-    def __init__(self, window, drag_list,width=600, height=400, x_cord=15, y_cord=15):
+    def __init__(self, window, drag_list,callback=None, width=600, height=400, x_cord=15, y_cord=15):
         """
             A canvas with a row of entries which can be dragged and sorted
             Parameters:
                 window(Frame):parent frame
                 drag_list(list[str]):the list with the names that should be sorted
+                callback:function to be called when a new row has been built
                 width(int):width of the canvas
                 height(int):height of the canvas
                 x_cord(int):the start pixel of the sorted row
@@ -15,6 +16,7 @@ class Dragsorter():
         """
         self.frame=Frame(window)
         self.drag_list=drag_list
+        self.callback=callback
         self.width=width
         self.height=height
         self.canvas=Canvas(self.frame, width=self.width, height=self.height)
@@ -33,6 +35,7 @@ class Dragsorter():
     def populate_item_list(self):
         for name in self.drag_list:
             self.add_item(name=name)
+        self.build_row()#aligns the items in a row
 
     def update_draglist(self, new_list):
         for item in self.list_items:
@@ -53,7 +56,7 @@ class Dragsorter():
         name_width=self.font.measure(name)+x_padding#with of the name+padding
         citem=_canvasitem(self.canvas,name, width=name_width )
         self.list_items.append(citem)
-        self.build_row()#aligns the items in a row
+        
 
     def _select_on_press(self, event):
         for item in self.list_items:
@@ -82,6 +85,9 @@ class Dragsorter():
         for item in self.list_items:
             item.move(x, self.global_y)
             x+=item.width
+        
+        if self.callback!=None:
+            self.callback()
 
     def grid(self, **kwargs):
         self.frame.grid(kwargs)
@@ -140,9 +146,11 @@ class _canvasitem():
 
 
 if __name__ == "__main__":
+    def callback():
+        print("callbback")
     root=Tk()
     drag_list=["oneone", "two", "three", "a much longer string to test how it will handle it"]
-    ds=Dragsorter(root, drag_list, 400,200)
+    ds=Dragsorter(root, drag_list,callback=callback, width=400,height=200)
     ds.frame.pack()
     newlist=["one", "twotwo", "lastone"]
     ds.update_draglist(newlist)
