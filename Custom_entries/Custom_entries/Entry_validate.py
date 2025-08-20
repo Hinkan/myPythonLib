@@ -1,6 +1,6 @@
 from tkinter import Entry, Frame, Label, StringVar
 
-class Entry_validate:
+class Entry_validate(Entry):
     """
     Entry which validates the characters entered
     Attributes:
@@ -23,6 +23,7 @@ class Entry_validate:
             orientation(str): h or v
             error_color(str): uses tkinter foreground colors
         '''
+        super().__init__(parent)
         self.supported_dtypes=["int", "float", "str"]
         self.parent=parent
         self.valid_bool=True
@@ -32,11 +33,11 @@ class Entry_validate:
         self.list_prohibited=list_prohibited
 
         self.result_string=StringVar()
-        self.frame=Frame(parent)
-        validation=(self.frame.register(self._validate))
         
-        self.e=Entry(self.frame, validate="focusout", validatecommand=(validation, '%P'))
-        self.l_val=Label(self.frame, textvariable=self.result_string, fg=error_color, width=15, anchor="w")
+        validation=(self.register(self._validate))
+        
+        self.e=Entry(self, validate="focusout", validatecommand=(validation, '%P'))
+        self.l_val=Label(self, textvariable=self.result_string, fg=error_color, width=15, anchor="w")
         if orientation=="h":
             self.e.grid(row=0, column=0)
             self.l_val.grid(row=0, column=1)
@@ -168,17 +169,7 @@ class Entry_validate:
             print("unknown comparetype in Entry validate")
             return False
         
-    def grid(self, **kwargs):
-        self.frame.grid(kwargs)
 
-    def pack(self, **kwargs):
-        self.frame.pack(kwargs)
-
-    def config(self, **kvargs):#TODO should b
-        try:
-            self.e.config(**kvargs)
-        except:
-            print("failed")
 
 if __name__ == "__main__":
 
