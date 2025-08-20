@@ -1,20 +1,21 @@
-from tkinter import Frame, Entry, Button
-class Entry_integer_arrows:
+from tkinter import Frame, Entry, Button, IntVar
+class Entry_integer_arrows(Entry):
     """
     Entry with buttons that increase/decreases the value, only works with integers
     Attributes:
         parentframe(Frame):parent frame
-        textvariable:only works with intvar
+        variable:only works with intvar
         delta: stepsize for each button click, default 1
     """
-    def __init__(self, parentframe, textvariable, delta=1):
-        self.i=textvariable
-        self.frame=Frame(parentframe)
+    def __init__(self, parent, variable, delta=1):
+        super().__init__(parent)
+        self.i=variable
+        #self=Frame(parentframe)
         self.button_depressed=False
         self.delta=delta
-        e=Entry(self.frame,textvariable=self.i,justify="c", width=10)
-        b1=Button(self.frame,text="<")
-        b2=Button(self.frame,text=">")
+        e=Entry(self,textvariable=self.i,justify="c", width=10)
+        b1=Button(self,text="<")
+        b2=Button(self,text=">")
         b1.grid(row=0, column=0, sticky="e")
         e.grid(row=0, column=1)
         b2.grid(row=0, column=2, sticky="w")
@@ -35,7 +36,7 @@ class Entry_integer_arrows:
         self.decrease()
 
     def onMouseUp_dec(self, event):
-        self.frame.after_cancel(self.after_id)
+        self.after_cancel(self.after_id)
         self.button_depressed=False
         
     def onMouseDown_inc(self, event):
@@ -44,7 +45,7 @@ class Entry_integer_arrows:
         self.increase()
 
     def onMouseUp_inc(self, event):
-        self.frame.after_cancel(self.after_id)
+        self.after_cancel(self.after_id)
         self.button_depressed=False
 
     def increase(self):
@@ -52,17 +53,22 @@ class Entry_integer_arrows:
             self.increment()
             if self.delay>1:
                 self.delay=int(self.delay*0.9)
-            self.after_id = self.frame.after(self.delay, self.increase)
+            self.after_id = self.after(self.delay, self.increase)
     
     def decrease(self):
         if self.button_depressed:
             self.decrement()
             if self.delay>1:
                 self.delay=int(self.delay*0.9)
-            self.after_id = self.frame.after(self.delay, self.decrease)
+            self.after_id = self.after(self.delay, self.decrease)
 
-    def grid(self, **kwargs):
-        self.frame.grid(kwargs)
 
-    def pack(self, **kwargs):
-        self.frame.pack(kwargs)
+if __name__ == "__main__":
+    from tkinter import Tk, Button
+    root=Tk()
+    root.geometry("300x400")
+    txtvar=IntVar()
+    Entry_integer_arrows(root,variable=txtvar).pack()
+    Button(root, command=lambda: print(txtvar.get())).pack()
+
+    root.mainloop()
