@@ -1,4 +1,4 @@
-from tkinter import Entry, Frame, Label, StringVar
+from tkinter import Entry, Label, StringVar
 
 class Entry_validate(Entry):
     """

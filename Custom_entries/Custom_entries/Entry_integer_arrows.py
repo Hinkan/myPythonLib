@@ -1,4 +1,4 @@
-from tkinter import Frame, Entry, Button, IntVar
+from tkinter import Entry, Button, IntVar
 class Entry_integer_arrows(Entry):
     """
     Entry with buttons that increase/decreases the value, only works with integers
