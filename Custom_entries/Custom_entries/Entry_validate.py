@@ -44,7 +44,9 @@ class Entry_validate(Entry):
         else:
             self.e.grid(row=0, column=0)
             self.l_val.grid(row=1, column=0)
-    
+    def insert(self, index, string):
+        self.e.insert(index=index, string=string)
+
     def _validate(self, P):
         """
         Internal function to validate 
@@ -186,6 +188,10 @@ if __name__ == "__main__":
     Entry_validate(root, "int",list_prohibited=[1,2,3]).pack()
     Entry_validate(root, "float",list_prohibited=[1.0,2.0,3.5]).pack()
     Entry_validate(root, "str",3, "E", list_prohibited=["goo", "foo"]).pack()
+    
+    e_insert=Entry_validate(root, "str")
+    e_insert.pack()
+    e_insert.insert(0, "test")
 
 
     root.mainloop()
