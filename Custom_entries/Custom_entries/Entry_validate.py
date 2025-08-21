@@ -44,8 +44,7 @@ class Entry_validate(Entry):
         else:
             self.e.grid(row=0, column=0)
             self.l_val.grid(row=1, column=0)
-    def insert(self, index, string):
-        self.e.insert(index=index, string=string)
+    
 
     def _validate(self, P):
         """
@@ -170,7 +169,11 @@ class Entry_validate(Entry):
         else:
             print("unknown comparetype in Entry validate")
             return False
-        
+    def insert(self, index, string):
+        self.e.insert(index=index, string=string)
+    
+    def delete(self, first, last = None):
+        self.e.delete(first=first, last=last)
 
 
 if __name__ == "__main__":
@@ -192,6 +195,7 @@ if __name__ == "__main__":
     e_insert=Entry_validate(root, "str")
     e_insert.pack()
     e_insert.insert(0, "test")
+    e_insert.delete(0, "end")
 
 
     root.mainloop()
