@@ -53,7 +53,10 @@ class Scrollable_messagebox():
         self.confirmbutton.grid(row=3, column=0)
     
     def callback_and_close(self):
-        self.callback()
+        try:
+            self.callback()
+        except:
+            print("Scrollabel_messagebox.askalternatives callback failed")
         self.window.destroy()
 
     def yesno(self):
