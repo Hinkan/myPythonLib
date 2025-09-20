@@ -1,5 +1,11 @@
-from tkinter import Toplevel, Label, Button, Frame
-from Scroll_windows.Scrollframe import ScrollFrame
+from tkinter import Toplevel, Label, Button, Frame, StringVar
+
+
+if __name__=="__main__":
+    from Scrollframe import ScrollFrame
+else:
+    from Scroll_windows.Scrollframe import ScrollFrame
+
 class Scrollable_messagebox():
     """
     Messagebox with scrollable part for
@@ -9,15 +15,17 @@ class Scrollable_messagebox():
         single_stringlist(list[str]):list of strings,
         multi_stringlist(list[list[str]]):Each item in list is a lsit of alternatives for buttin of alternatives
         callback(function):
+        query_return: the reurnvalue for yesno/yesnocancel, read from the mainfunction with a trace_add listener
     """
     
-    def __init__(self, parent, shortstring=None, single_stringlist=None, multi_stringlist=None, callback=None, buttonbool=None)->Frame:
+    def __init__(self, parent, shortstring=None, single_stringlist=None, multi_stringlist=None, callback=None, buttonbool=None, query_return:StringVar=None)->Frame:
         self.window=Toplevel(parent)
         
         self.window.geometry("250x400")
         self.window.lift()
         self.callback=callback
         self.buttonbool=buttonbool
+        self.query_return=query_return
 
         self.shortstring=shortstring
         self.single_stringlist=single_stringlist
@@ -63,7 +71,21 @@ class Scrollable_messagebox():
         pass
 
     def yesnocancel(self):
-        pass
+        Label(self.window, text=self.shortstring ).grid(row=0, column=1)
+        sf=ScrollFrame(self.window)
+        sf.set_dimension((200,300))
+        for row, item in enumerate(self.single_stringlist):         
+            Label(sf.scrollframe, text=item).grid(row=row+1, column=0)
+
+        sf.container.grid(row=1, column=0, columnspan=3)
+        self.confirmbutton=Button(self.window, text="Yes", command=lambda:self.query_return.set("Yes"))
+        self.confirmbutton.grid(row=3, column=0)
+        self.confirmbutton=Button(self.window, text="No", command=lambda:self.query_return.set("No"))
+        self.confirmbutton.grid(row=3, column=1)
+
+        self.confirmbutton=Button(self.window, text="Cancel", command=lambda:self.query_return.set("Cancel"))
+        self.confirmbutton.grid(row=3, column=2)
+
 
     def close(self):
         self.window.destroy()
@@ -82,3 +104,19 @@ class Scrollable_messagebox():
     
     def config_command(self, newcommand):
         self.confirmbutton.config(command=newcommand)
+
+if __name__ == "__main__":
+    
+    def print_query(retvalue):
+        print(retvalue.get())
+    
+    
+    import tkinter as tk
+    root = tk.Tk()
+    retvalue=StringVar()
+    retvalue.trace_add("write", lambda *argz :print_query(retvalue))
+    sm=Scrollable_messagebox(root, "this is to test", ["one", "two", "three"], query_return=retvalue)
+    sm.yesnocancel()
+    
+    
+    root.mainloop()
