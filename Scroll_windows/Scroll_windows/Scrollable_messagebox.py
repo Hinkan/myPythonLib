@@ -18,10 +18,15 @@ class Scrollable_messagebox():
         query_return: the reurnvalue for yesno/yesnocancel, read from the mainfunction with a trace_add listener
     """
     
-    def __init__(self, parent, shortstring=None, single_stringlist=None, multi_stringlist=None, callback=None, buttonbool=None, query_return:StringVar=None)->Frame:
+    def __init__(self, parent, shortstring=None, single_stringlist=None, multi_stringlist=None, callback=None, buttonbool=None, query_return:StringVar=None, width=250, height=400, scrollwidth=200, scrollheight=300)->Frame:
         self.window=Toplevel(parent)
+        self.height=height
+        self.width=width
+        self.scrollwidth=scrollwidth
+        self.scrollheight=scrollheight
         
-        self.window.geometry("250x400")
+        self.window.geometry(f"{self.width}x{self.height}")
+        
         self.window.lift()
         self.callback=callback
         self.buttonbool=buttonbool
@@ -35,7 +40,7 @@ class Scrollable_messagebox():
     def warning(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=0)
         sf=ScrollFrame(self.window)
-        sf.set_dimension((200,300))
+        sf.set_dimension((self.scrollwidth, self.scrollheight))
         for row, item in enumerate(self.single_stringlist):
             Label(sf.scrollframe, text=item).grid(row=row, column=0)
         sf.container.grid(row=1, column=0)
@@ -44,7 +49,8 @@ class Scrollable_messagebox():
     def askalternatives(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=0)
         sf=ScrollFrame(self.window)
-        sf.set_dimension((200,300))
+        
+        sf.set_dimension((self.scrollwidth, self.scrollheight))
         self.returnlist=self.single_stringlist.copy()
         self.buttonarray=self.multi_stringlist.copy()
 
@@ -68,12 +74,24 @@ class Scrollable_messagebox():
         self.window.destroy()
 
     def yesno(self):
-        pass
+        Label(self.window, text=self.shortstring ).grid(row=0, column=0, columnspan=2)
+        sf=ScrollFrame(self.window)
+        sf.set_dimension((self.scrollwidth, self.scrollheight))
+        for row, item in enumerate(self.single_stringlist):         
+            Label(sf.scrollframe, text=item).grid(row=row+1, column=0)
+
+        sf.container.grid(row=1, column=0, columnspan=2, padx=(10,10))
+        self.confirmbutton=Button(self.window, text="Yes", command=lambda:self.query_return.set("Yes"))
+        self.confirmbutton.grid(row=3, column=0)
+        self.confirmbutton=Button(self.window, text="No", command=lambda:self.query_return.set("No"))
+        self.confirmbutton.grid(row=3, column=1)
 
     def yesnocancel(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=1)
         sf=ScrollFrame(self.window)
-        sf.set_dimension((200,300))
+        
+        sf.set_dimension((self.scrollwidth, self.scrollheight))
+        
         for row, item in enumerate(self.single_stringlist):         
             Label(sf.scrollframe, text=item).grid(row=row+1, column=0)
 
@@ -115,8 +133,12 @@ if __name__ == "__main__":
     root = tk.Tk()
     retvalue=StringVar()
     retvalue.trace_add("write", lambda *argz :print_query(retvalue))
-    sm=Scrollable_messagebox(root, "this is to test", ["one", "two", "three"], query_return=retvalue)
-    sm.yesnocancel()
+    width=250
+    height=270
+    scrollwidth=200
+    scrollheight=200
+    sm=Scrollable_messagebox(root, "this is to test", ["one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three"], query_return=retvalue, width=width, height=height, scrollwidth=scrollwidth, scrollheight=scrollheight)
+    sm.yesno()
     
     
     root.mainloop()
