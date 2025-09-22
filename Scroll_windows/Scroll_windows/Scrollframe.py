@@ -57,3 +57,14 @@ class ScrollFrame():
         self.scrollcanvas.config(scrollregion=self.scrollcanvas.bbox('all'))
         self.scrollcanvas.bind("<Enter>", lambda event: self.final_scroll(event, self.scrollcanvas, lambda event: self.scroll(event, self.scrollcanvas)))
         self.scrollcanvas.bind("<Leave>", lambda event: self.stop_scroll(event, self.scrollcanvas))
+
+if __name__ == "__main__":
+    from tkinter import Tk
+    root=Tk()
+    sf=ScrollFrame(root)
+    mylist=["item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item" ]
+    for row, item in enumerate(mylist):         
+            Label(sf.scrollframe, text=item).grid(row=row+1, column=0)
+    sf.set_dimension((100,200))
+    sf.pack()
+    root.mainloop()
