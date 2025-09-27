@@ -50,6 +50,7 @@ orientation(literal):(default "h") should the error message be to the left("h") 
 error_color(literal):(default="red") uses tkinter foreground colors
 
 ### Example
+```Python
 from tkinter import Tk, Button
 
 from Custom_entries import Entry_validate
@@ -67,3 +68,5 @@ Entry_validate(root, "float",list_prohibited=[1.0,2.0,3.5], error_color="blue").
 Entry_validate(root, "str",3, "E", list_prohibited=["foo", "bar"], orientation="v").pack()#str, exactly 3 characters, not "foo" or bar, error message below entry
 
 root.mainloop()
+
+```
