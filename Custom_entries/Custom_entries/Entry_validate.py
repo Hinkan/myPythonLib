@@ -1,6 +1,5 @@
 from tkinter import Entry, Label, StringVar
 
-#TODO eats two tabs to get through, something needs to get takefocus=false
 class Entry_validate(Entry):
     """
     Entry which validates the characters entered
@@ -35,10 +34,11 @@ class Entry_validate(Entry):
 
         self.result_string=StringVar()
         
-        validation=(self.register(self._validate))
+        validation=self.register(self._validate)#the entry validatecommand needs to be configure in a special way, this a workaround
         
         self.e=Entry(self, validate="focusout", validatecommand=(validation, '%P'))
         self.l_val=Label(self, textvariable=self.result_string, fg=error_color, width=15, anchor="w")
+        self.configure( takefocus=False)#the widget itself cannot take focus, only the Entry widget
         if orientation=="h":
             self.e.grid(row=0, column=0)
             self.l_val.grid(row=0, column=1)
