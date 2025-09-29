@@ -11,7 +11,7 @@ class Entry_validate(Entry):
         list_prohibited(list): a list of values that is prohibited, returns false
         orientation(str): h or v
     """
-    def __init__(self, parent, dtype, length=None, comparison=None, list_prohibited=[], orientation="h", error_color="red"):
+    def __init__(self, parent, dtype, length=None, comparison=None, list_prohibited=[], allow_empty=False, orientation="h", error_color="red"):
         '''
         Initialize entry with validation
         Parameters:
@@ -20,6 +20,7 @@ class Entry_validate(Entry):
             length(int): the length to validate
             comaprison(literal):G:greather than, L:lesser than, E: equal, None 
             list_prohibited(list): a list of values that is prohibited, returns false
+            allow_empty(bool): is the entry allowed to be empty
             orientation(str): h or v
             error_color(str): uses tkinter foreground colors
         '''
@@ -31,6 +32,7 @@ class Entry_validate(Entry):
         self.length=length
         self.comparison=comparison
         self.list_prohibited=list_prohibited
+        self.allow_empty=allow_empty
 
         self.result_string=StringVar()
         
@@ -55,7 +57,7 @@ class Entry_validate(Entry):
             P(str): value to validate
         """
         P_typecast=None
-        if len(P)==0:
+        if len(P)==0 and self.allow_empty==False:
             self.result_string.set("empty")
             self.valid_bool=False
             return False
@@ -99,25 +101,28 @@ class Entry_validate(Entry):
         if self.dtype=="str":
             P_typecast=str(P)
         if self.comparison !=None:
-            if self.comparison=="E":
-                if self._comparelength(P, "L", self.length):
-                    self.result_string.set("To short")
-                    self.valid_bool=False
-                    return False
-                if self._comparelength(P, "G", self.length):
-                    self.result_string.set("To long")
-                    self.valid_bool=False
-                    return False
-            if self.comparison=="G":
-                if not self._comparelength(P, "G", self.length):
-                    self.result_string.set("To short")
-                    self.valid_bool=False
-                    return False
-            if self.comparison=="L":
-                if not self._comparelength(P, "L", self.length):
-                    self.result_string.set("To Long")
-                    self.valid_bool=False
-                    return False
+            if self.allow_empty and len(P)==0:
+                pass#if entry is empty and that is allowed dont make comparison
+            else:
+                if self.comparison=="E":
+                    if self._comparelength(P, "L", self.length):
+                        self.result_string.set("To short")
+                        self.valid_bool=False
+                        return False
+                    if self._comparelength(P, "G", self.length):
+                        self.result_string.set("To long")
+                        self.valid_bool=False
+                        return False
+                if self.comparison=="G":
+                    if not self._comparelength(P, "G", self.length):
+                        self.result_string.set("To short")
+                        self.valid_bool=False
+                        return False
+                if self.comparison=="L":
+                    if not self._comparelength(P, "L", self.length):
+                        self.result_string.set("To Long")
+                        self.valid_bool=False
+                        return False
 
         if P_typecast in self.list_prohibited:
             self.result_string.set("Value prohibited")
@@ -191,6 +196,9 @@ if __name__ == "__main__":
     Entry_validate(root, "str", 5, "G").pack()
     Entry_validate(root, "str", 5, "L").pack()
     Entry_validate(root, "str", 5, "E").pack()
+    Entry_validate(root, "str", 5, "L", allow_empty=True).pack()
+    Entry_validate(root, "str", 5, "G", allow_empty=True).pack()
+    Entry_validate(root, "str", 5, "E", allow_empty=True).pack()
     Entry_validate(root, "int", None, None).pack()
     Entry_validate(root, "float", None, None).pack()
     Entry_validate(root, "int", None, None).pack()
