@@ -1,4 +1,4 @@
-from tkinter import Entry, Label, StringVar
+from tkinter import Entry, Label, StringVar, END
 
 class Entry_validate(Entry):
     """
@@ -93,6 +93,8 @@ class Entry_validate(Entry):
             isempty=False
             try:
                 P=P.replace(",", ".")
+                self.e.delete(0,END)
+                self.e.insert(0,P)
             except:
                 print("failed to replace")
 
@@ -211,14 +213,8 @@ if __name__ == "__main__":
     Entry_validate(root, "str", 5, "G").pack()
     Entry_validate(root, "str", 5, "L").pack()
     Entry_validate(root, "str", 5, "E").pack()
-    Entry_validate(root, "int", 5, "L", allow_empty=True).pack()
     Entry_validate(root, "int", 5, "G", allow_empty=True).pack()
-    Entry_validate(root, "int", 5, "E", allow_empty=True).pack()
     Entry_validate(root, "float", 5, "L", allow_empty=True).pack()
-    Entry_validate(root, "float", 5, "G", allow_empty=True).pack()
-    Entry_validate(root, "float", 5, "E", allow_empty=True).pack()
-    Entry_validate(root, "str", 5, "L", allow_empty=True).pack()
-    Entry_validate(root, "str", 5, "G", allow_empty=True).pack()
     Entry_validate(root, "str", 5, "E", allow_empty=True).pack()
     Entry_validate(root, "int", None, None).pack()
     Entry_validate(root, "float", None, None).pack()
