@@ -1,5 +1,6 @@
 from tkinter import Entry, Label, StringVar
 
+#TODO eats two tabs to get through, something needs to get takefocus=false
 class Entry_validate(Entry):
     """
     Entry which validates the characters entered
@@ -79,6 +80,11 @@ class Entry_validate(Entry):
         
         if self.dtype=="float" :
             type_ok=True
+            try:
+                P=P.replace(",", ".")
+            except:
+                print("failed to replace")
+
             try:
                 float(P)
             except:
