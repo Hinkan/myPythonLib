@@ -56,6 +56,7 @@ class Entry_validate(Entry):
         Parameters:
             P(str): value to validate
         """
+        
         P_typecast=None
         if len(P)==0 and self.allow_empty==False:
             self.result_string.set("empty")
@@ -68,9 +69,13 @@ class Entry_validate(Entry):
             return False
         if self.dtype=="int":
             type_ok=True
+            isempty=False
             try:
-                if not P.isnumeric():
-                    type_ok=False
+                if self.allow_empty and len(P)==0:
+                    isempty=True
+                else:
+                    if not P.isnumeric():
+                        type_ok=False
             except:
                 type_ok=False
             if not type_ok:
@@ -78,17 +83,24 @@ class Entry_validate(Entry):
                 self.valid_bool=False
                 return False
             else:
-                P_typecast=int(P)
+                if isempty:
+                    P_typecast=None
+                else:
+                    P_typecast=int(P)
         
         if self.dtype=="float" :
             type_ok=True
+            isempty=False
             try:
                 P=P.replace(",", ".")
             except:
                 print("failed to replace")
 
             try:
-                float(P)
+                if self.allow_empty and len(P)==0:
+                    isempty=True
+                else:
+                    float(P)
             except:
                 type_ok=False
 
@@ -97,7 +109,10 @@ class Entry_validate(Entry):
                 self.valid_bool=False
                 return False
             else:
-                P_typecast=float(P)
+                if isempty:
+                    P_typecast=None
+                else:
+                    P_typecast=float(P)
         if self.dtype=="str":
             P_typecast=str(P)
         if self.comparison !=None:
@@ -196,6 +211,12 @@ if __name__ == "__main__":
     Entry_validate(root, "str", 5, "G").pack()
     Entry_validate(root, "str", 5, "L").pack()
     Entry_validate(root, "str", 5, "E").pack()
+    Entry_validate(root, "int", 5, "L", allow_empty=True).pack()
+    Entry_validate(root, "int", 5, "G", allow_empty=True).pack()
+    Entry_validate(root, "int", 5, "E", allow_empty=True).pack()
+    Entry_validate(root, "float", 5, "L", allow_empty=True).pack()
+    Entry_validate(root, "float", 5, "G", allow_empty=True).pack()
+    Entry_validate(root, "float", 5, "E", allow_empty=True).pack()
     Entry_validate(root, "str", 5, "L", allow_empty=True).pack()
     Entry_validate(root, "str", 5, "G", allow_empty=True).pack()
     Entry_validate(root, "str", 5, "E", allow_empty=True).pack()
