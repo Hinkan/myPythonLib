@@ -51,6 +51,7 @@ error_color(literal):(default="red") uses tkinter foreground colors
 
 ### Example
 ```Python
+
 from tkinter import Tk, Button
 
 from Custom_entries import Entry_validate
