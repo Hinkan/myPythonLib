@@ -1,6 +1,6 @@
 [project]
 name = "custom-entries"
-version = "0.3.1"
+version = "0.3.3"
 description = ""
 authors = [
     {name = "Hinkan",email = "henrik.pet93@gmail.com"}
