@@ -104,7 +104,7 @@ class Entry_validate(Entry):
                     self.result_string.set("To short")
                     self.valid_bool=False
                     return False
-                if len(P) > self.length:
+                if self._comparelength(P, "G", self.length):
                     self.result_string.set("To long")
                     self.valid_bool=False
                     return False
