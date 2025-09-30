@@ -151,10 +151,12 @@ class Entry_validate(Entry):
     
     def get(self):
         """
-        Get the value from Entry if the value is valid, othevise returns None
+        Get the value from Entry if the value is valid, empty fields return '', othevise returns None
         """
         self._validate(self.e.get())
         if self.valid_bool:
+            if len(self.e.get())==0:
+                return self.e.get()
             if self.dtype=="int":
                 return int(self.e.get())
             elif self.dtype=="float":
@@ -210,11 +212,12 @@ if __name__ == "__main__":
     root=Tk()
     root.geometry("300x400")
     
-    Entry_validate(root, "str", 5, "G").pack()
-    Entry_validate(root, "str", 5, "L").pack()
-    Entry_validate(root, "str", 5, "E").pack()
-    Entry_validate(root, "int", 5, "G", allow_empty=True).pack()
-    Entry_validate(root, "float", 5, "L", allow_empty=True).pack()
+    #Entry_validate(root, "str", 5, "G").pack()
+    #Entry_validate(root, "str", 5, "L").pack()
+    #Entry_validate(root, "str", 5, "E").pack()
+    #Entry_validate(root, "int", 5, "G", allow_empty=True).pack()
+    ef=Entry_validate(root, "float", 5, "L", allow_empty=True)
+    ef.pack()
     Entry_validate(root, "str", 5, "E", allow_empty=True).pack()
     Entry_validate(root, "int", None, None).pack()
     Entry_validate(root, "float", None, None).pack()
@@ -222,11 +225,8 @@ if __name__ == "__main__":
     Entry_validate(root, "int",list_prohibited=[1,2,3]).pack()
     Entry_validate(root, "float",list_prohibited=[1.0,2.0,3.5]).pack()
     Entry_validate(root, "str",3, "E", list_prohibited=["goo", "foo"]).pack()
-    
-    e_insert=Entry_validate(root, "str")
-    e_insert.pack()
-    e_insert.insert(0, "test")
-    e_insert.delete(0, "end")
 
+    Button(root, text="button", command=lambda x=ef: print(x.get())).pack()
+    
 
     root.mainloop()
