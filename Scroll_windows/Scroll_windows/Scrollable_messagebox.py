@@ -18,8 +18,10 @@ class Scrollable_messagebox():
         query_return: the reurnvalue for yesno/yesnocancel, read from the mainfunction with a trace_add listener
     """
     
-    def __init__(self, parent, shortstring=None, single_stringlist=None, multi_stringlist=None, callback=None, buttonbool=None, query_return:StringVar=None, width=250, height=400, scrollwidth=200, scrollheight=300)->Frame:
+    def __init__(self, parent, shortstring=None, single_stringlist=None, multi_stringlist=None, callback=None, buttonbool=None, query_return:StringVar=None, title=None, width=250, height=400, scrollwidth=200, scrollheight=300)->Frame:
         self.window=Toplevel(parent)
+        if title!=None:
+            self.window.title(title)
         self.height=height
         self.width=width
         self.scrollwidth=scrollwidth
