@@ -43,6 +43,14 @@ class ScrollFrame():
     def stop_scroll(self, event, widget):
         widget.unbind_all("<MouseWheel>")
 
+    def move_to(self, target:float):
+        """
+        function to scroll to a place
+        Parameter:
+        target(float):0 is top, 1 is bottom
+        """
+        self.scrollcanvas.yview_moveto(target)
+
     def grid(self, **kwargs):
         self.container.grid(kwargs)
 
@@ -59,7 +67,7 @@ class ScrollFrame():
         self.scrollcanvas.bind("<Leave>", lambda event: self.stop_scroll(event, self.scrollcanvas))
 
 if __name__ == "__main__":
-    from tkinter import Tk
+    from tkinter import Tk, Button
     root=Tk()
     sf=ScrollFrame(root)
     mylist=["item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item", "item" ]
@@ -67,4 +75,5 @@ if __name__ == "__main__":
             Label(sf.scrollframe, text=item).grid(row=row+1, column=0)
     sf.set_dimension((100,200))
     sf.pack()
+    Button(root, text="scrolldown", command=lambda: sf.move_to(1)).pack()
     root.mainloop()
