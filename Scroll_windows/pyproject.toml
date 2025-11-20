@@ -1,6 +1,6 @@
 [project]
 name = "scroll-windows"
-version = "0.2.1"
+version = "0.2.2"
 description = ""
 authors = [
     {name = "Hinkan",email = "henrik.pet93@gmail.com"}

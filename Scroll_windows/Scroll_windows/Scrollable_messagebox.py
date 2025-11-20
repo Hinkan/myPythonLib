@@ -75,6 +75,16 @@ class Scrollable_messagebox():
             print("Scrollabel_messagebox.askalternatives callback failed")
         self.window.destroy()
 
+    def set_and_close(self, answear):
+        if answear=="Yes":
+            self.query_return.set("Yes")
+        elif answear=="No":  
+            self.query_return.set("No")
+        else:
+            self.query_return.set("Cancel")
+        self.window.destroy()
+
+
     def yesno(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=0, columnspan=2)
         sf=ScrollFrame(self.window)
@@ -83,9 +93,9 @@ class Scrollable_messagebox():
             Label(sf.scrollframe, text=item).grid(row=row+1, column=0)
 
         sf.container.grid(row=1, column=0, columnspan=2, padx=(10,10))
-        self.confirmbutton=Button(self.window, text="Yes", command=lambda:self.query_return.set("Yes"))
+        self.confirmbutton=Button(self.window, text="Yes", command=lambda answear="Yes":self.set_and_close(answear))
         self.confirmbutton.grid(row=3, column=0)
-        self.confirmbutton=Button(self.window, text="No", command=lambda:self.query_return.set("No"))
+        self.confirmbutton=Button(self.window, text="No", command=lambda answear="No":self.set_and_close(answear))
         self.confirmbutton.grid(row=3, column=1)
 
     def yesnocancel(self):
@@ -133,6 +143,7 @@ if __name__ == "__main__":
     
     import tkinter as tk
     root = tk.Tk()
+    a=""
     retvalue=StringVar()
     retvalue.trace_add("write", lambda *argz :print_query(retvalue))
     width=250
@@ -141,6 +152,4 @@ if __name__ == "__main__":
     scrollheight=200
     sm=Scrollable_messagebox(root, "this is to test", ["one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three","one", "two", "three"], query_return=retvalue, width=width, height=height, scrollwidth=scrollwidth, scrollheight=scrollheight)
     sm.yesno()
-    
-    
     root.mainloop()
