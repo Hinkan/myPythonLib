@@ -9,13 +9,14 @@ class combobox_add_to_frame:
     Combobox that adds the selected items to a list below the combobox
     Attributes:
     """
-    def __init__(self, parent, list_selected, list_options, scrollable=False):
+    def __init__(self, parent, list_selected, list_options, scrollable=False, unique=True):
         '''Parameters:
             parent(Frame):parent frame
             list_selected:the values added thorugh the combobox
             list_options:The values for the combobox
         '''
         self.scrollable=scrollable
+        self.unique=unique
         self.frame=Frame(parent)
         self.var_selected=StringVar()
         self.list_selected=list_selected
@@ -31,8 +32,8 @@ class combobox_add_to_frame:
         return self.list_selected
 
     def _update_list(self, event):
-        if self.var_selected.get() in self.list_selected:
-            pass#allready in list
+        if self.var_selected.get() in self.list_selected and self.unique:
+            pass#allready in list or multiples are allowed
         else:
 
             self.list_selected.append(self.var_selected.get())
@@ -81,7 +82,7 @@ if __name__ == "__main__":
     selected=[]
     values=["one", "two", "three"]
 
-    cb=combobox_add_to_frame(root, selected, values, scrollable=True)
+    cb=combobox_add_to_frame(root, selected, values, scrollable=True, unique=False)
     cb.pack()
 
     Button(root, text="read", command=lambda: print(selected)).pack()
