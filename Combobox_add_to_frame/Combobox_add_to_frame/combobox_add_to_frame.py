@@ -34,12 +34,15 @@ class combobox_add_to_frame:
         if self.var_selected.get() in self.list_selected:
             pass#allready in list
         else:
+
             self.list_selected.append(self.var_selected.get())
         self._redraw()
         
     def _redraw(self):
         if self.scrollable:
-            for child in self.sf.scrollframe.winfo_children()[1:]:
+            a=self.sf.scrollframe.winfo_children()
+            print(a)
+            for child in self.sf.scrollframe.winfo_children():
                 child.destroy()
             for row, sel in enumerate(self.list_selected):
                 rowframe=Frame(self.sf.scrollframe)
