@@ -22,7 +22,7 @@ class combobox_add_to_frame:
         self.list_selected=list_selected
         self.cbox=Combobox(self.frame, textvariable=self.var_selected, values=list_options)
         self.cbox.bind("<<ComboboxSelected>>", self._update_list)
-        self.cbox.grid(row=0, column=0, columnspan=2)
+        self.cbox.grid(row=0, column=0, columnspan=2, sticky="W")
         if self.scrollable:
             self.sf=ScrollFrame(self.frame)
             self.sf.set_dimension((200,50))
