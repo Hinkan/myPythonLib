@@ -28,7 +28,7 @@ class combobox_add_to_frame:
             self.sf.set_dimension((200,50))
             self.sf.grid(row=1, column=0, columnspan=2)
     
-    def get_list_selected(self):
+    def get(self):
         return self.list_selected
 
     def _update_list(self, event):
