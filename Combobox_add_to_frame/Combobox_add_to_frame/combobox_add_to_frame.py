@@ -27,6 +27,7 @@ class combobox_add_to_frame:
             self.sf=ScrollFrame(self.frame)
             self.sf.set_dimension((200,50))
             self.sf.grid(row=1, column=0, columnspan=2)
+        self._redraw()
     
     def get(self):
         return self.list_selected
@@ -79,10 +80,10 @@ if __name__ == "__main__":
     root=Tk()
     root.geometry("300x400")
 
-    selected=[]
+    selected=["two"]
     values=["one", "two", "three"]
 
-    cb=combobox_add_to_frame(root, selected, values, scrollable=True, unique=False)
+    cb=combobox_add_to_frame(root, selected, values, scrollable=True, unique=True)
     cb.pack()
 
     Button(root, text="read", command=lambda: print(selected)).pack()
