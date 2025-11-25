@@ -3,13 +3,14 @@ from tkinter.ttk import Combobox
 from Scroll_windows import ScrollFrame
 
 #TODO possibility to resize
+#TODO possible to set sizes
 
 class combobox_add_to_frame:
     """
     Combobox that adds the selected items to a list below the combobox
     Attributes:
     """
-    def __init__(self, parent, list_selected, list_options, scrollable=False, unique=True):
+    def __init__(self, parent, list_selected, list_options, label=None, scrollable=False, unique=True):
         '''Parameters:
             parent(Frame):parent frame
             list_selected:the values added thorugh the combobox
@@ -18,11 +19,13 @@ class combobox_add_to_frame:
         self.scrollable=scrollable
         self.unique=unique
         self.frame=Frame(parent)
+        self.label=Label(self.frame, text=label)
+        self.label.grid(row=0, column=0)
         self.var_selected=StringVar()
         self.list_selected=list_selected
         self.cbox=Combobox(self.frame, textvariable=self.var_selected, values=list_options)
         self.cbox.bind("<<ComboboxSelected>>", self._update_list)
-        self.cbox.grid(row=0, column=0, columnspan=2, sticky="W")
+        self.cbox.grid(row=0, column=1, sticky="W")
         if self.scrollable:
             self.sf=ScrollFrame(self.frame)
             self.sf.set_dimension((200,50))
@@ -83,7 +86,7 @@ if __name__ == "__main__":
     selected=["two"]
     values=["one", "two", "three"]
 
-    cb=combobox_add_to_frame(root, selected, values, scrollable=True, unique=True)
+    cb=combobox_add_to_frame(root, selected, values,label="mylabel", scrollable=True, unique=True)
     cb.pack()
 
     Button(root, text="read", command=lambda: print(selected)).pack()
