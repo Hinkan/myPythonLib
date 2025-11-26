@@ -19,17 +19,21 @@ class combobox_add_to_frame:
         self.scrollable=scrollable
         self.unique=unique
         self.frame=Frame(parent)
+        self.frame.columnconfigure([0], weight=1)
+        self.frame.columnconfigure([1], weight=2)
+        self.frame.rowconfigure([0], weight=1)
+        self.frame.rowconfigure([0], weight=3)
         self.label=Label(self.frame, text=label)
-        self.label.grid(row=0, column=0)
+        self.label.grid(row=0, column=0, sticky="W")
         self.var_selected=StringVar()
         self.list_selected=list_selected
         self.cbox=Combobox(self.frame, textvariable=self.var_selected, values=list_options)
         self.cbox.bind("<<ComboboxSelected>>", self._update_list)
-        self.cbox.grid(row=0, column=1, sticky="W")
+        self.cbox.grid(row=0, column=1, sticky="E")
         if self.scrollable:
             self.sf=ScrollFrame(self.frame)
             self.sf.set_dimension((200,50))
-            self.sf.grid(row=1, column=0, columnspan=2)
+            self.sf.grid(row=1, column=0, columnspan=2, sticky="E")
         self._redraw()
     
     def get(self):
