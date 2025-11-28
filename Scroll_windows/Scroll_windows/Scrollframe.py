@@ -1,5 +1,5 @@
 from tkinter import Frame, Canvas, Scrollbar, Label
-
+#TODO dont start scrolling untill the frame is full
 class ScrollFrame():
     """
     A frame with fixed size that can be scrolled
