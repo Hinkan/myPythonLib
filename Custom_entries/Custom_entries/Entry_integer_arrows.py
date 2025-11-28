@@ -1,7 +1,6 @@
 from tkinter import Entry, Button, IntVar
 
 
-#TODO change the cursor when hovering the arrows
 class Entry_integer_arrows(Entry):
     """
     Entry with buttons that increase/decreases the value, only works with integers
