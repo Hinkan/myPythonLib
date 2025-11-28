@@ -1,7 +1,6 @@
 from tkinter import Tk, Canvas, Frame, font
 
 class Dragsorter():
-    #TODO make everything resizeble
     def __init__(self, window, drag_list,callback=None, width=600, height=400, canvascolor="white", itemcolor='#E4E4E4', x_cord=15, y_cord=15):
         """
             A canvas with a row of entries which can be dragged and sorted
@@ -48,7 +47,7 @@ class Dragsorter():
         self.populate_item_list()
 
 
-    def add_item(self, name, x_padding=10):
+    def add_item(self, name, x_padding=10, x_min=40):
         '''Adds a _canvasitem to self.list_items
         Parameters:
             name(str):name of the item
@@ -56,6 +55,8 @@ class Dragsorter():
         '''
         
         name_width=self.font.measure(name)+x_padding#with of the name+padding
+        if name_width<x_min:
+            name_width=x_min
         citem=_canvasitem(self.canvas,name, width=name_width, color=self.itemcolor)
         self.list_items.append(citem)
         
@@ -105,10 +106,8 @@ class _canvasitem():
         self.x0=x0
         self.y0=y0
         self.canvas=canvas
-        if width==None:
-            self.width=50#TODO should be based on name length
-        else:
-            self.width=width
+
+        self.width=width
         if height==None:
             self.height=15
         else:
