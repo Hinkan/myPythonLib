@@ -1,4 +1,7 @@
 from tkinter import Entry, Button, IntVar
+
+
+#TODO change the cursor when hovering the arrows
 class Entry_integer_arrows(Entry):
     """
     Entry with buttons that increase/decreases the value, only works with integers
@@ -14,8 +17,8 @@ class Entry_integer_arrows(Entry):
         self.button_depressed=False
         self.delta=delta
         e=Entry(self,textvariable=self.i,justify="c", width=10)
-        b1=Button(self,text="<")
-        b2=Button(self,text=">")
+        b1=Button(self,text="<", cursor="arrow")
+        b2=Button(self,text=">", cursor="arrow")
         b1.grid(row=0, column=0, sticky="e")
         e.grid(row=0, column=1)
         b2.grid(row=0, column=2, sticky="w")
