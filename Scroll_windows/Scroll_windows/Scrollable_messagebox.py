@@ -41,7 +41,7 @@ class Scrollable_messagebox():
 
     def warning(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=0)
-        sf=ScrollFrame(self.window)
+        sf=ScrollFrame(self.window, only_scroll_when_full=True)
         sf.set_dimension((self.scrollwidth, self.scrollheight))
         for row, item in enumerate(self.single_stringlist):
             Label(sf.scrollframe, text=item).grid(row=row, column=0)
@@ -50,7 +50,7 @@ class Scrollable_messagebox():
 
     def askalternatives(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=0)
-        sf=ScrollFrame(self.window)
+        sf=ScrollFrame(self.window, only_scroll_when_full=True)
         
         sf.set_dimension((self.scrollwidth, self.scrollheight))
         self.returnlist=self.single_stringlist.copy()
@@ -87,7 +87,7 @@ class Scrollable_messagebox():
 
     def yesno(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=0, columnspan=2)
-        sf=ScrollFrame(self.window)
+        sf=ScrollFrame(self.window, only_scroll_when_full=True)
         sf.set_dimension((self.scrollwidth, self.scrollheight))
         for row, item in enumerate(self.single_stringlist):         
             Label(sf.scrollframe, text=item).grid(row=row+1, column=0)
@@ -100,7 +100,7 @@ class Scrollable_messagebox():
 
     def yesnocancel(self):
         Label(self.window, text=self.shortstring ).grid(row=0, column=1)
-        sf=ScrollFrame(self.window)
+        sf=ScrollFrame(self.window, only_scroll_when_full=True)
         
         sf.set_dimension((self.scrollwidth, self.scrollheight))
         
