@@ -26,7 +26,6 @@ class Dragsorter():
         self.global_y=y_cord
         self.rowstart=x_cord
         self.font=font.nametofont("TkDefaultFont")#get the default font used, used to make the labelsizes automatically
-
         self._populate_item_list()#create the items
 
         self.canvas.bind( "<Button-1>", self._select_on_press)
@@ -130,7 +129,7 @@ class Dragsorter():
 
 #TODO add fontsize
 class _canvasitem():
-    def __init__(self,canvas, name, x0=10, y0=10, width=50, height=15, textoffset=5 ,color='#E4E4E4')->None:
+    def __init__(self,canvas, name, x0=10, y0=10, width=50, height=15, textoffset=5, color='#E4E4E4')->None:
         '''
         Only intended to be used with dragsroter
 
@@ -189,21 +188,6 @@ class _canvasitem():
         else:
             return False
 
-    #def get_area(self):
-    #    '''
-    #    get the origin and the size of the item
-    #    return:
-    #    x0: left edge
-    #    y0: top edge
-    #    x1: right edge
-    #    y1: bottom edge
-    #    '''
-    #    x0=self.x0
-    #    y0=self.y0
-    #    x1=self.x0+self.width
-    #    y1=self.y0+self.height
-    #    return x0,y0,x1,y1
-    
     def destroy(self):
         '''
         Destroys the item
